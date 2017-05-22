@@ -37,7 +37,7 @@ class QuizActivity : Activity() {
             val answer2 = generateAnswer((1 + Random().nextInt(1000)))
             val answer3 = generateAnswer((1 + Random().nextInt(1000)))
             val answer4 = generateAnswer((1 + Random().nextInt(1000)))
-            //Thread.sleep(2000)
+
             uiThread {
                 val textViewToChange = findViewById(R.id.question) as TextView
                 textViewToChange.setText(question)
@@ -124,10 +124,10 @@ class QuizActivity : Activity() {
 
                     toast("you scored " + score + "points" )
                     Thread.sleep(500)
-                    val homeIntent = Intent(Intent.ACTION_MAIN);
-                    homeIntent.addCategory( Intent.CATEGORY_HOME );
-                    homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(homeIntent);
+                    val homeIntent = Intent(Intent.ACTION_MAIN)
+                    homeIntent.addCategory( Intent.CATEGORY_HOME )
+                    homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    startActivity(homeIntent)
                     finish()
                 }else {
                     startActivity<QuizActivity>("counter" to (intent.extras.getInt("counter") + 1), "score" to score, "FLAG_ACTIVITY_CLEAR_TOP" to true)
