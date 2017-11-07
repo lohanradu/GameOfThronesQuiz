@@ -11,19 +11,16 @@ class ScoreActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ScoreActivityUi().setContentView(this)
-//        val score = intent.extras.getInt("Score")
-//        val message = findViewById(R.id.bye) as TextView
-//        message.text = "Congratulations, you scored "+ score
+        val score = intent.extras.getInt("Score")
+        val message = findViewById(R.id.bye) as TextView
+        message.text = "Congratulations, you scored " + score
     }
 
 }
 
-
-
 class ScoreActivityUi : AnkoComponent<ScoreActivity> {
     private val customStyle = { v: Any ->
         when (v) {
-
             is TextView -> v.textSize = 24f
         }
     }
@@ -33,8 +30,8 @@ class ScoreActivityUi : AnkoComponent<ScoreActivity> {
             padding = dip(16)
 
             imageView(R.drawable.got).lparams {
-               ; margin = dip(16)
-                ;gravity = Gravity.CENTER
+                 margin = dip(16)
+                gravity = Gravity.CENTER
 
             }
 
@@ -45,9 +42,7 @@ class ScoreActivityUi : AnkoComponent<ScoreActivity> {
 
             myRichView()
         }.applyRecursively(customStyle)
-
     }
-
 }
 
 

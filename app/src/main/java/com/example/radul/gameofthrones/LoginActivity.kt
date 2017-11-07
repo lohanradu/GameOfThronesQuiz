@@ -3,16 +3,22 @@ package com.example.radul.gameofthrones
 import android.app.Activity
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.text.InputType.TYPE_CLASS_TEXT
-import android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
 import android.view.Gravity
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
+import android.widget.Toast
 import org.jetbrains.anko.*
-import org.jetbrains.anko.custom.async
 import org.jetbrains.anko.sdk25.coroutines.onClick
-import java.net.URL
+import android.content.Intent
+import android.net.Uri
+import android.support.v4.content.ContextCompat
+import android.support.v4.content.ContextCompat.*
+import android.util.Log
+import android.content.ActivityNotFoundException
+import android.support.v4.content.ContextCompat.startActivity
+import android.support.v4.content.ContextCompat.startActivity
+
+
 
 
 class MainActivity : AppCompatActivity() {
@@ -24,7 +30,6 @@ class MainActivity : AppCompatActivity() {
 
     fun tryLogin(ui: AnkoContext<MainActivity>, name: CharSequence?) {
         ui.doAsync {
-            Thread.sleep(500)
 
             activityUiThreadWithContext {
                 if (checkCredentials(name.toString())) {
@@ -41,7 +46,6 @@ class MainActivity : AppCompatActivity() {
 }
 
 
-
 class MainActivityUi : AnkoComponent<MainActivity> {
     private val customStyle = { v: Any ->
         when (v) {
@@ -55,29 +59,48 @@ class MainActivityUi : AnkoComponent<MainActivity> {
             padding = dip(16)
 
             imageView(R.drawable.got).lparams {
-               ; margin = dip(16)
+                ; margin = dip(16)
                 ;gravity = Gravity.CENTER
 
             }
 
             val name = editText {
                 hintResource = R.string.name
-                hint = "Username"
+                hint = "Fill your name"
             }
 
 
             button("Start Quiz") {
-                onClick {
-                    ui.owner.tryLogin(ui, name.text)
+                onClick { ui.owner.tryLogin(ui, name.text) }
 
-                }
+            }
+            val emailDraft = editText {
+                lines = 3
+                hint = "Contact Developer"
             }
 
-            myRichView()
-        }.applyRecursively(customStyle)
+            button("Contact") {
+                onClick {
+                    try {
+                        val intent = Intent(Intent.ACTION_SEND)
+                        intent.type = "plain/text"
+                        intent.putExtra(Intent.EXTRA_EMAIL, arrayOf("some@email.address"))
+                        intent.putExtra(Intent.EXTRA_SUBJECT, "Complaining")
+                        intent.putExtra(Intent.EXTRA_TEXT, emailDraft.text)
+                        startActivity(getContext(), intent,intent.extras)
 
+                    } catch (e: ActivityNotFoundException) {
+                        //TODO smth
+                    }
+
+//            myRichView()
+                }
+
+
+            }
+        }
     }
-
 }
+
 
 

@@ -4,7 +4,7 @@ apply plugin: 'kotlin-android'
 ext.anko_version = '0.10.0'
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.example.radul.gameofthrones"
         minSdkVersion 19
